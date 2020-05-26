@@ -1,32 +1,30 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "lib": ["dom", "dom.iterable", "scripthost", "esnext"],
+    "target": "ES6",
     "module": "esnext",
-    "strict": true,
+    // "strict": true,
+    "allowJs": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "outDir": "generated",
     "jsx": "preserve",
-    "importHelpers": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
+    "strictNullChecks": false,
+    "strictFunctionTypes": false,
+    "downlevelIteration": true,
     "sourceMap": true,
-    "baseUrl": ".",
     "suppressImplicitAnyIndexErrors": true,
-    "types": [
-      "node",
-      "webpack-env"
-    ],
+    "importHelpers": true,
+    "baseUrl": ".",
+    "types": ["node", "webpack-env"],
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+      "~/*": ["./*"],
+      "@/*": ["src/*"]
+    }
   },
   "include": [
     "src/**/*.ts",
@@ -35,7 +33,5 @@
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

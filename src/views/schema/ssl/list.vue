@@ -27,7 +27,7 @@
         icon="el-icon-edit"
         @click="handleCreate"
       >
-        {{ $t('table.add') }}
+        {{ $t("table.add") }}
       </el-button>
     </div>
 
@@ -39,7 +39,7 @@
       fit
       highlight-current-row
       style="width: 100%;"
-      :default-sort="{prop: 'id', order: 'descending'}"
+      :default-sort="{ prop: 'id', order: 'descending' }"
       @sort-change="sortChange"
     >
       <el-table-column
@@ -56,22 +56,18 @@
         width="230"
         class-name="fixed-width"
       >
-        <template slot-scope="{row}">
-          <el-button
-            type="primary"
-            size="mini"
-            @click="handleToEdit(row)"
-          >
-            {{ $t('table.edit') }}
+        <template slot-scope="{ row }">
+          <el-button type="primary" size="mini" @click="handleToEdit(row)">
+            {{ $t("table.edit") }}
           </el-button>
 
           <el-button
-            v-if="row.status!=='deleted'"
+            v-if="row.status !== 'deleted'"
             size="mini"
             type="danger"
             @click="handleRemove(row)"
           >
-            {{ $t('table.delete') }}
+            {{ $t("table.delete") }}
           </el-button>
         </template>
       </el-table-column>
@@ -80,119 +76,121 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { Form } from 'element-ui'
+import { Component, Vue } from "vue-property-decorator";
+import { Form } from "element-ui";
 
-import Pagination from '@/components/Pagination/index.vue'
+import Pagination from "@/components/Pagination/index.vue";
 
-import { getSSLList, removeSSL } from '@/api/schema/ssl'
+import { getSSLList, removeSSL } from "@/api/schema/ssl";
 
 @Component({
-  name: 'UpstreamList',
+  name: "UpstreamList",
   components: {
     Pagination
   }
 })
 export default class extends Vue {
-  private tableKey = 0
-  private list = []
-  private total = 0
-  private listLoading = true
+  private tableKey = 0;
+  private list = [];
+  private total = 0;
+  private listLoading = true;
   private listQuery = {
     page: 1,
     limit: 20,
     importance: undefined,
     title: undefined,
     type: undefined,
-    sort: '+id'
-  }
+    sort: "+id"
+  };
 
-  private tableData = []
-  private tableKeys: any[] = []
+  private tableData = [];
+  private tableKeys: any[] = [];
 
   created() {
-    this.getList()
+    this.getList();
   }
 
   private async getList() {
-    this.listLoading = true
+    this.listLoading = true;
 
     this.tableKeys = [
       {
-        key: 'id',
+        key: "id",
         width: 100
-      }, {
-        key: 'sni',
+      },
+      {
+        key: "sni",
         width: 300
       }
-    ]
-    let { node: { nodes = [] } } = await getSSLList() as any
+    ];
+    let {
+      node: { nodes = [] }
+    } = (await getSSLList()) as any;
     nodes = [...nodes].map((item: any) => {
-      const id = item.key.match(/\/([0-9]+)/)[1]
-      const fakeId = parseInt(id.replace(/^(0+)/, ''))
+      const id = item.key.match(/\/([0-9]+)/)[1];
+      const fakeId = parseInt(id.replace(/^(0+)/, ""), 0);
 
       return {
         id: fakeId,
         realId: id,
         sni: item.value.sni
-      }
-    })
+      };
+    });
 
-    this.tableData = nodes
-    this.total = nodes.length
+    this.tableData = nodes;
+    this.total = nodes.length;
 
     setTimeout(() => {
-      this.listLoading = false
-    }, 0.5 * 1000)
+      this.listLoading = false;
+    }, 0.5 * 1000);
   }
 
   private handleFilter() {
-    this.listQuery.page = 1
-    this.getList()
+    this.listQuery.page = 1;
+    this.getList();
   }
 
   private handleRemove(row: any) {
-    this.$confirm(`Do you want to remove ssl ${row.id}?`, 'Warning', {
-      confirmButtonText: 'Confirm',
-      cancelButtonText: 'Cancel',
-      type: 'warning'
-    })
-      .then(async() => {
-        await removeSSL(row.realId)
-        this.getList()
-        this.$message.success(`Remove ssl ${row.id} successfully!`)
-      })
+    this.$confirm(`Do you want to remove ssl ${row.id}?`, "Warning", {
+      confirmButtonText: "Confirm",
+      cancelButtonText: "Cancel",
+      type: "warning"
+    }).then(async () => {
+      await removeSSL(row.realId);
+      this.getList();
+      this.$message.success(`Remove ssl ${row.id} successfully!`);
+    });
   }
 
   private sortChange(data: any) {
-    const { prop, order } = data
-    if (prop === 'id') {
-      this.sortByID(order)
+    const { prop, order } = data;
+    if (prop === "id") {
+      this.sortByID(order);
     }
   }
 
   private sortByID(order: string) {
-    if (order === 'ascending') {
-      this.listQuery.sort = '+id'
+    if (order === "ascending") {
+      this.listQuery.sort = "+id";
     } else {
-      this.listQuery.sort = '-id'
+      this.listQuery.sort = "-id";
     }
-    this.handleFilter()
+    this.handleFilter();
   }
 
   private handleCreate() {
     this.$router.push({
-      name: 'SchemaSSLCreate'
-    })
+      name: "SchemaSSLCreate"
+    });
   }
 
   private handleToEdit(row: any) {
     this.$router.push({
-      name: 'SchemaSSLEdit',
+      name: "SchemaSSLEdit",
       params: {
         id: row.realId
       }
-    })
+    });
   }
 }
 </script>

@@ -26,19 +26,11 @@
       label-width="80px"
       :show-message="false"
     >
-      <el-form-item
-        label="Desc"
-      >
-        <el-input
-          v-model="form.desc"
-          placeholder="Description"
-        />
+      <el-form-item label="Desc">
+        <el-input v-model="form.desc" placeholder="Description" />
       </el-form-item>
 
-      <el-form-item
-        label="URIs"
-        prop="uris"
-      >
+      <el-form-item label="URIs" prop="uris">
         <el-select
           v-model="form.uris"
           allow-create
@@ -57,11 +49,7 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item
-        label="Hosts"
-        prop="hosts"
-        placeholder="Hosts"
-      >
+      <el-form-item label="Hosts" prop="hosts" placeholder="Hosts">
         <el-select
           v-model="form.hosts"
           multiple
@@ -78,28 +66,16 @@
           />
         </el-select>
         <p class="tip">
-          {{ $t('schema.route.propertyHostsTip') }}
+          {{ $t("schema.route.propertyHostsTip") }}
         </p>
       </el-form-item>
 
-      <el-form-item
-        label="Remote Address"
-        prop="remote_addr"
-      >
-        <el-input
-          v-model="form.remote_addr"
-          placeholder="Remote Address"
-        />
+      <el-form-item label="Remote Address" prop="remote_addr">
+        <el-input v-model="form.remote_addr" placeholder="Remote Address" />
       </el-form-item>
 
-      <el-form-item
-        label="Methods"
-      >
-        <el-select
-          v-model="form.methods"
-          multiple
-          placeholder="Methods"
-        >
+      <el-form-item label="Methods">
+        <el-select v-model="form.methods" multiple placeholder="Methods">
           <el-option
             v-for="item in methods"
             :key="item"
@@ -109,10 +85,7 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item
-        label="Upstream"
-        prop="upstream_id"
-      >
+      <el-form-item label="Upstream" prop="upstream_id">
         <el-select
           v-model="form.upstream_id"
           placeholder="Upstream"
@@ -128,10 +101,7 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item
-        label="Service"
-        prop="service_id"
-      >
+      <el-form-item label="Service" prop="service_id">
         <el-select
           v-model="form.service_id"
           placeholder="Service"
@@ -150,7 +120,7 @@
       <el-form-item
         v-for="(index, item) in form.plugins"
         :key="item"
-        :label="&quot;plugin&quot;"
+        :label="'plugin'"
         class="plugin-item"
       >
         <el-button
@@ -167,7 +137,7 @@
           type="danger"
           @click.prevent="removePlugin(item)"
         >
-          {{ $t('button.delete') }}
+          {{ $t("button.delete") }}
         </el-button>
 
         <el-select
@@ -187,39 +157,27 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button
-          :disabled="!filteredPluginList.length"
-          @click="addPlugin"
-        >
-          {{ $t('button.add_plugin') }}
+        <el-button :disabled="!filteredPluginList.length" @click="addPlugin">
+          {{ $t("button.add_plugin") }}
         </el-button>
       </el-form-item>
-      <VarArgs
-        :p-vars.sync="form.vars"
-        @onChange="onVarArgsChange"
-      />
+      <VarArgs :p-vars.sync="form.vars" @onChange="onVarArgsChange" />
 
-      <el-form-item
-        label="filter_func"
-        prop="filter_func"
-      >
+      <el-form-item label="filter_func" prop="filter_func">
         <el-input
           v-model="form.filter_func"
           type="textarea"
-          :autosize="{minRows: 2, maxRows: 4}"
+          :autosize="{ minRows: 2, maxRows: 4 }"
           :placeholder="$t('schema.route.fileterFunc')"
         />
       </el-form-item>
 
       <el-form-item>
-        <el-button
-          type="primary"
-          @click="onSubmit"
-        >
-          {{ $t('button.save') }}
+        <el-button type="primary" @click="onSubmit">
+          {{ $t("button.save") }}
         </el-button>
         <el-button @click="toPreviousPage">
-          {{ $t('button.cancel') }}
+          {{ $t("button.cancel") }}
         </el-button>
       </el-form-item>
     </el-form>
@@ -233,152 +191,166 @@
   </div>
 </template>
 
-<script lang='ts'>
-import { Component, Vue } from 'vue-property-decorator'
-import { Form } from 'element-ui'
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { Form } from "element-ui";
 
-import PluginDialog from '@/components/PluginDialog/index.vue'
-import VarArgs from '@/components/VarArgs/index.vue'
+import PluginDialog from "@/components/PluginDialog/index.vue";
+import VarArgs from "@/components/VarArgs/index.vue";
 
-import { getRouter, createRouter, updateRouter } from '@/api/schema/routes'
-import { getPluginList } from '@/api/schema/plugins'
-import { getUpstreamList } from '@/api/schema/upstream'
-import { getServiceList } from '@/api/schema/services'
-import { TagsViewModule } from '@/store/modules/tags-view'
+import { getRouter, createRouter, updateRouter } from "@/api/schema/routes";
+import { getPluginList } from "@/api/schema/plugins";
+import { getUpstreamList } from "@/api/schema/upstream";
+import { getServiceList } from "@/api/schema/services";
+import { TagsViewModule } from "@/store/modules/tags-view";
 
-import i18n from '@/lang'
+import i18n from "@/lang";
 
 @Component({
-  name: 'RouterEdit',
+  name: "RouterEdit",
   components: {
     PluginDialog,
     VarArgs
   }
 })
-
 export default class extends Vue {
   private form = {
     uris: [],
     hosts: [],
-    remote_addr: '',
-    upstream_id: '',
-    service_id: '',
+    remote_addr: "",
+    upstream_id: "",
+    service_id: "",
     methods: [],
     plugins: {},
     vars: [],
-    desc: '',
-    filter_func: ''
-  }
+    desc: "",
+    filter_func: ""
+  };
 
   // TODO: can add existed info from route list
-  private ExistedUris = [{}]
-  private ExistedHosts = [{}]
-  private validateFilterFuncRegexp = /^function\(\)[^]*?\bend$/
+  private ExistedUris = [{}];
+  private ExistedHosts = [{}];
+  private validateFilterFuncRegexp = /^function\(\)[^]*?\bend$/;
 
   private rules = {
     uris: {
       required: true
     },
     filter_func: [
-      { pattern: this.validateFilterFuncRegexp, trigger: 'blur', message: i18n.t('schema.route.fileterFunc') }
+      {
+        pattern: this.validateFilterFuncRegexp,
+        trigger: "blur",
+        message: i18n.t("schema.route.fileterFunc")
+      }
     ]
-  }
-  private isEditMode: boolean = false
+  };
+  private isEditMode: boolean = false;
 
   private methods = [
-    'GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'
-  ]
+    "GET",
+    "POST",
+    "PUT",
+    "DELETE",
+    "PATCH",
+    "HEAD",
+    "OPTIONS"
+  ];
 
-  private pluginList = []
-  private pluginName: string = ''
-  private showPluginDialog: boolean = false
-  private upstreamList = []
-  private serviceList = []
+  private pluginList = [];
+  private pluginName: string = "";
+  private showPluginDialog: boolean = false;
+  private upstreamList = [];
+  private serviceList = [];
 
   created() {
-    this.isEditMode = (this.$route as any).name.indexOf('Create') === -1
+    this.isEditMode = (this.$route as any).name.indexOf("Create") === -1;
 
     if (this.isEditMode) {
-      this.getData()
+      this.getData();
     }
 
-    this.getPluginList()
-    this.getUpstreamList()
-    this.getServiceList()
+    this.getPluginList();
+    this.getUpstreamList();
+    this.getServiceList();
   }
 
   get filteredPluginList() {
-    return this.pluginList.filter(item => !this.form.plugins.hasOwnProperty(item))
+    return this.pluginList.filter(
+      item => !this.form.plugins.hasOwnProperty(item)
+    );
   }
 
   private reset() {
     this.form = {
       uris: [],
       hosts: [],
-      remote_addr: '',
-      upstream_id: '',
-      service_id: '',
+      remote_addr: "",
+      upstream_id: "",
+      service_id: "",
       methods: [],
       plugins: {},
       vars: [],
-      desc: '',
-      filter_func: ''
-    }
+      desc: "",
+      filter_func: ""
+    };
   }
 
   filterDataWithRegex(val: any, regex: any) {
     if (val.length > 0) {
-      const newArr: string[] = []
-      val.filter(function(item: any) {
-        if (typeof item === 'string') {
-          item = item.replace(/\s+/g, '')
+      const newArr: string[] = [];
+      val.filter((item: any) => {
+        if (typeof item === "string") {
+          item = item.replace(/\s+/g, "");
           if (regex.test(item)) {
-            newArr.push(item)
+            newArr.push(item);
           }
         }
-      })
+      });
 
-      newArr.map(function(item: any, index: number) {
-        val[index] = item
-      })
+      newArr.map((item: any, index: number) => {
+        val[index] = item;
+      });
 
       if (val.length > newArr.length) {
-        val.splice(newArr.length, val.length)
+        val.splice(newArr.length, val.length);
       }
     }
   }
 
   private filterUriOptions(val: any) {
-    this.filterDataWithRegex(val, new RegExp('^([\\*\\./0-9a-zA-Z-_~@\\?\\!#$\\(\\)]+)$'))
+    this.filterDataWithRegex(
+      val,
+      new RegExp("^([\\*\\./0-9a-zA-Z-_~@\\?\\!#$\\(\\)]+)$")
+    );
   }
 
   private async getData() {
-    const { id } = this.$route.params
+    const { id } = this.$route.params;
     let {
       node: {
         value: {
-          uri = '',
+          uri = "",
           uris = [],
           hosts = [],
-          host = '',
-          remote_addr = '',
-          upstream_id = '',
-          service_id = '',
+          host = "",
+          remote_addr = "",
+          upstream_id = "",
+          service_id = "",
           methods = [],
           plugins = {},
           vars = [],
-          desc = '',
-          filter_func = ''
+          desc = "",
+          filter_func = ""
         }
       }
-    } = await getRouter(id) as any
+    } = (await getRouter(id)) as any;
 
     if (hosts.length === 0 && host.length > 0) {
-      hosts.push(host)
+      hosts.push(host);
     }
 
     if (uris.length === 0 && uri.length > 0) {
-      uris.push(uri)
+      uris.push(uri);
     }
 
     this.form = {
@@ -392,133 +364,136 @@ export default class extends Vue {
       vars,
       desc,
       filter_func
-    }
+    };
   }
 
   private async onSubmit() {
-    (this.$refs.form as any).validate(async(valid: boolean, invalidField: any) => {
-      if (valid) {
-        let data = Object.assign({}, this.form)
-        if (!data.methods.length) {
-          delete data.methods
-        }
-
-        Object.entries(data).forEach(([key, value]) => {
-          if (typeof data[key] === 'object') {
-            if (key !== 'plugins' && Object.keys(value).length === 0) {
-              delete data[key]
-            }
-          } else {
-            if (value === '') {
-              delete data[key]
-            }
+    (this.$refs.form as any).validate(
+      async (valid: boolean, invalidField: any) => {
+        if (valid) {
+          let data = Object.assign({}, this.form);
+          if (!data.methods.length) {
+            delete data.methods;
           }
-        })
 
-        delete data['tempPlugin']
-        if (this.isEditMode) {
-          await updateRouter(this.$route.params.id, data)
+          Object.entries(data).forEach(([key, value]) => {
+            if (typeof data[key] === "object") {
+              if (key !== "plugins" && Object.keys(value).length === 0) {
+                delete data[key];
+              }
+            } else {
+              if (value === "") {
+                delete data[key];
+              }
+            }
+          });
+
+          delete data["tempPlugin"];
+          if (this.isEditMode) {
+            await updateRouter(this.$route.params.id, data);
+          } else {
+            await createRouter(data);
+          }
+
+          this.$message.success(
+            `${
+              this.isEditMode ? "Update the" : "Create a"
+            } service successfully!`
+          );
+
+          if (!this.isEditMode) {
+            TagsViewModule.delView(this.$route);
+            this.$nextTick(() => {
+              this.$router.push({
+                name: "SchemaRoutesList"
+              });
+            });
+          }
         } else {
-          await createRouter(data)
+          if (invalidField.filter_func) {
+            this.$message.warning(invalidField.filter_func[0].message);
+          }
+          return false;
         }
-
-        this.$message.success(`${this.isEditMode ? 'Update the' : 'Create a'} service successfully!`)
-
-        if (!this.isEditMode) {
-          TagsViewModule.delView(this.$route)
-          this.$nextTick(() => {
-            this.$router.push({
-              name: 'SchemaRoutesList'
-            })
-          })
-        }
-      } else {
-        if (invalidField.filter_func) {
-          this.$message.warning(invalidField.filter_func[0].message)
-        }
-        return false
       }
-    })
+    );
   }
 
   private toPreviousPage() {
-    this.$router.go(-1)
+    this.$router.go(-1);
   }
 
   private async getUpstreamList() {
     const {
-      node: {
-        nodes = []
-      }
-    } = await getUpstreamList() as any
+      node: { nodes = [] }
+    } = (await getUpstreamList()) as any;
 
     this.upstreamList = nodes.map((item: any) => {
-      const id = item.key.match(/\/([0-9]+)/)[1]
+      const id = item.key.match(/\/([0-9]+)/)[1];
       return {
         ...item.value,
         id
-      }
-    })
+      };
+    });
   }
 
   private async getServiceList() {
     const {
-      node: {
-        nodes = []
-      }
-    } = await getServiceList() as any
+      node: { nodes = [] }
+    } = (await getServiceList()) as any;
 
     this.serviceList = nodes.map((item: any) => {
-      const id = item.key.match(/\/([0-9]+)/)[1]
+      const id = item.key.match(/\/([0-9]+)/)[1];
       return {
         ...item.value,
         id
-      }
-    })
+      };
+    });
   }
 
   private async getPluginList() {
-    this.pluginList = await getPluginList() as any
+    this.pluginList = (await getPluginList()) as any;
   }
 
   private async showPlugin(name: string) {
-    this.pluginName = name
-    this.showPluginDialog = true
+    this.pluginName = name;
+    this.showPluginDialog = true;
   }
 
   private onPluginSave(name: string, data: any) {
-    delete this.form.plugins['tempPlugin']
-    this.showPluginDialog = false
-    this.form.plugins[name] = data
+    delete this.form.plugins["tempPlugin"];
+    this.showPluginDialog = false;
+    this.form.plugins[name] = data;
   }
 
   private async addPlugin() {
-    if (this.form.plugins.hasOwnProperty('tempPlugin')) return
+    if (this.form.plugins.hasOwnProperty("tempPlugin")) return;
 
     this.form.plugins = {
       ...this.form.plugins,
       tempPlugin: null
-    }
+    };
   }
 
   private removePlugin(name: any) {
-    this.$confirm(`Do you want to remove ${name} plugin?`, 'Warning', {
-      confirmButtonText: 'Confirm',
-      cancelButtonText: 'Cancel',
-      type: 'warning'
+    this.$confirm(`Do you want to remove ${name} plugin?`, "Warning", {
+      confirmButtonText: "Confirm",
+      cancelButtonText: "Cancel",
+      type: "warning"
     })
-      .then(async() => {
-        Vue.delete(this.form.plugins, name)
-      }).catch(() => {})
+      .then(async () => {
+        Vue.delete(this.form.plugins, name);
+      })
+      .catch(() => {});
   }
 
   private onVarArgsChange(val: any) {
-    this.form.vars = val
+    this.form.vars = val;
   }
 }
 </script>
 
-<style lang='scss'>
+<style lang="scss">
 .container {
   padding: 20px;
   .el-form {
