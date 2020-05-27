@@ -1,47 +1,61 @@
-/**
- * MIT License
- *
- * Copyright (c) 2018 Chong Guo
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
-*/
+.clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
 
-/* Override Element UI variables */
-$--color-primary: #1890ff;
-$--color-success: #13ce66;
-$--color-warning: #FFBA00;
-$--color-danger: #ff4949;
-$--color-info: #5d5d5d;
-$--button-font-weight: 400;
-$--color-text-regular: #1f2d3d;
-$--border-color-light: #dfe4ed;
-$--border-color-lighter: #e6ebf5;
-$--table-border:1px solid#dfe6ec;
+$--color-primary: #0078D4;
+$--color-warning: #FAD337;
+$--color-success: #4ECB73;
+$--color-danger: #F2637B;
+$--color-info: #2DB7F5;
+$--color-text-regular: #262626;
+$--color-text-primary: #171717;
+$--border-color-base: #DCDEE2;
+$--border-radius-base: 2px;
+$--card-padding: 16px;
+$--dialog-padding-primary: 16px;
+$--button-padding-vertical: 8px;
+$--button-padding-horizontal: 10px;
+$--button-medium-padding-vertical: 8px;
+$--button-medium-padding-horizontal: 10px;
+$--button-small-padding-horizontal: 10px;
+$--button-small-padding-vertical: 7px;
+$--button-mini-padding-horizontal: 8px;
+$--button-mini-padding-vertical: 5px;
+$--checkbox-bordered-padding: 5px 10px 5px 10px;
+$--checkbox-bordered-height: 32px;
+$--checkbox-bordered-medium-height: 32px;
+$--checkbox-bordered-small-height: 28px;
+$--checkbox-bordered-mini-height: 24px;
+$--checkbox-bordered-medium-padding: 5px 20px 5px 10px;
+$--checkbox-bordered-small-padding: 3px 15px 3px 10px;
+$--checkbox-bordered-mini-padding: 1px 15px 1px 10px;
+$--collapse-header-height: 38px;
+$--input-height: 32px;
+$--input-medium-height: 32px;
+$--input-small-height: 28px;
+$--input-mini-height: 24px;
+$--input-width: 140px;
+$--tooltip-padding: 8px;
 
-/* icon font path, required */
-$--font-path: '~element-ui/lib/theme-chalk/fonts';
+/* Sidebar */
+$sideBarWidth: 210px;
+$subMenuBg:#1f2d3d;
+$subMenuHover:#001528;
+$subMenuActiveText:#f4f4f5;
+$menuBg:#304156;
+$menuText:#bfcbd9;
+$menuActiveText:#409EFF; // Also see settings.sidebarTextTheme
 
-// Apply overrided variables in Element UI
-@import '~element-ui/packages/theme-chalk/src/index';
+/* Login page */
+$lightGray: #eee;
+$darkGray:#889aa4;
+$loginBg: #2d3a4b;
+$loginCursorColor: #fff;
 
-// The :export directive is the magic sauce for webpack
-// https://mattferderer.com/use-sass-variables-in-typescript-and-javascript
 :export {
   theme: $--color-primary;
 }

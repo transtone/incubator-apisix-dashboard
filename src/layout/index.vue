@@ -94,8 +94,9 @@ export default class extends mixins(ResizeMixin) {
 </script>
 
 <style lang="scss" scoped>
+@import '@/styles/element-variables.scss';
+
 .app-wrapper {
-  @include clearfix;
   position: relative;
   height: 100%;
   width: 100%;

@@ -20,7 +20,9 @@ import Vue from 'vue'
 import 'normalize.css'
 import ElementUI from 'element-ui'
 import SvgIcon from 'vue-svgicon'
-import '@/styles/index.scss'
+import '@/styles/element-variables.scss'
+import '@/styles/index.css'
+import '@/styles/svgicon.css'
 import Component from 'vue-class-component'
 
 import App from '@/App.vue'
@@ -32,7 +34,7 @@ import '@/permission'
 
 Vue.use(ElementUI, {
   size: AppModule.size, // Set element-ui default size
-  i18n: (key: string, value: string) => i18n.t(key, value)
+  i18n: (key: string, value: string) => i18n.t(key,value)
 })
 
 Vue.use(SvgIcon, {

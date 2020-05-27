@@ -1,29 +1,3 @@
-<!--
-#
-# MIT License
-#
-# Copyright (c) 2018 Chong Guo
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-#
--->
-
 <template>
   <div :class="{'has-logo': showLogo}">
     <sidebar-logo
@@ -60,16 +34,18 @@ import { PermissionModule } from '@/store/modules/permission'
 import { SettingsModule } from '@/store/modules/settings'
 import SidebarItem from './SidebarItem.vue'
 import SidebarLogo from './SidebarLogo.vue'
-import variables from '@/styles/_variables.scss'
 
 @Component({
   name: 'SideBar',
   components: {
     SidebarItem,
-    SidebarLogo
-  }
+    SidebarLogo,
+  },
 })
 export default class extends Vue {
+
+  variables: any = {}
+
   get sidebar() {
     return AppModule.sidebar
   }
@@ -83,15 +59,7 @@ export default class extends Vue {
   }
 
   get menuActiveTextColor() {
-    if (SettingsModule.sidebarTextTheme) {
-      return SettingsModule.theme
-    } else {
-      return variables.menuActiveText
-    }
-  }
-
-  get variables() {
-    return variables
+    return this.variables.menuActiveText
   }
 
   get activeMenu() {

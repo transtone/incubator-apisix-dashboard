@@ -150,6 +150,8 @@ export default class extends Vue {
 </script>
 
 <style lang="scss">
+@import '@/styles/element-variables.scss';
+
 .el-submenu.is-active > .el-submenu__title {
   color: $subMenuActiveText !important;
 }

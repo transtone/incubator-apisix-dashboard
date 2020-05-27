@@ -13,6 +13,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "strictNullChecks": false,
     "strictFunctionTypes": false,
     "downlevelIteration": true,
